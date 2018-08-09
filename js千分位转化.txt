@@ -1,0 +1,30 @@
+function thousand(num){
+            var regx=/(\d)(?=(\d{3})+$)/g;
+            var result;
+		//判断是否为字符串数字
+            if(typeof num == 'string'){
+                let str=num;
+		//判断是否带有小数点
+                if(str.indexOf(".")==-1){
+                    result=str.replace(regx,'$1,')+'.00'
+                }else{
+                    var newStr=str.split('.');
+                    var str2=newStr[0].replace(regx,'$1,')
+                    console.log(str2)
+			//小数点后面只有一位
+                    if(newStr[1].length<=1){
+                        result=str2+'.'+newStr[1]+'0'
+			//小数点后面有多位
+                    }else if(newStr[1]>1){
+                        var dec=newStr[1].substr(0,2)
+                        result=str2+'.'+dec
+                    }
+                }
+            }else if(typeof num == 'number'){
+                return num.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')
+            }else if(num==undefined || num==null){
+                return '0.00'
+            }
+            return result;
+        }
+        console.log(thousand('13235'))
